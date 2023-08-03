@@ -1,10 +1,19 @@
 // 회원가입 페이지
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
-    const [email, setEmail]= useState('');
-    const [password, setPassword]= useState('');
-    const [errorMessage, setErrorMessage]= useState('');
+function Signup () {
+    const [email, setEmail]= useState(''); // 이메일 
+    const [password, setPassword]= useState(''); // 비밀번호 
+    const [errorMessage, setErrorMessage]= useState(''); // 에러 메시지 
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+        const jwtToken= localStorage.getItem('jwt'); // 토큰 유효성 검사
+        if (jwtToken){
+            navigate('/todo');
+        }
+    },[navigate]);
 
     const handleEmailChange =(e) =>{
         setEmail(e.target.value);
@@ -20,8 +29,26 @@ const Signup = () => {
         }else if (password.length <8 ){
             setErrorMessage('비밀번호는 8자 이상이어야 합니다.');
         }else{
-            console.log('Signup successful!');
-            setErrorMessage('');
+            // SignUp api
+            fetch('https://www.pre-onboarding-selection-task.shop/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password}),
+            })
+            .then((response) => response.json())
+            .then((data) =>{
+                if (data.statusCode !==400){
+                    setErrorMessage('');
+                    navigate('/signin'); // 로그인 페이지로 이동 
+                }else{
+                    setErrorMessage('동일한 이메일이 이미 존재합니다.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
     };
     // email 유효성 검사
@@ -39,7 +66,6 @@ const Signup = () => {
       <div>
         <h1>회원가입 페이지</h1>
         <p>회원가입 페이지입니다.</p>
-        {/* 예시 */}
         <input 
             data-testid="email-input"
             type= "email"
