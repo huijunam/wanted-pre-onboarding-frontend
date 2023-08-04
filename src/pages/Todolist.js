@@ -6,7 +6,7 @@ function Todolist () {
     const [todos, setTodos]= useState([]);
     const [editingTodoId, setEditingTodiId] = useState(null); // todo list 수정 id 
     const [editingTodoValue, setEditingTodoValue] = useState(''); // todo list 수정 value
-    const [editingTodoisCompleted, setEditingTodoisCompleted] =useState(Boolean); // todo list 수정 isCompleted
+    const [editingTodoisCompleted, setEditingTodoisCompleted] =useState(false); // todo list 수정 isCompleted
     const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 
     const [jwtToken, setJwtToken]=useState(''); // jwt 토큰 
 
@@ -90,16 +90,15 @@ function Todolist () {
         window.location.reload();
     }
 
-    const handleModifyTodo =(id, value, isCompleted) =>{
+    const handleModifyTodo =(id, value) =>{
         setEditingTodiId(id)
         setEditingTodoValue(value);
-        setEditingTodoisCompleted(isCompleted);
     };
 
     const handleCancel =()=>{
         setEditingTodiId(null);
         setEditingTodoValue('');
-        setEditingTodoisCompleted('');
+        setEditingTodoisCompleted(false);
         setErrorMessage('');
     }
 
@@ -119,6 +118,7 @@ function Todolist () {
         })
         .then((response) => response.json())
         .then((data) =>{
+            console.log(data);
             const EditTodoItem ={
                 id: data.id,
                 todo: data.todo,
@@ -133,7 +133,7 @@ function Todolist () {
             // 초기화
             setEditingTodiId(null);
             setEditingTodoValue('');
-            setEditingTodoisCompleted('');
+            setEditingTodoisCompleted(false);
             setErrorMessage('');
         })
         .catch((error) =>{
@@ -157,7 +157,10 @@ function Todolist () {
                     {editingTodoId === todo.id ? (
                         <>
                             <label>
-                                <input type="checkbox" />
+                                <input type="checkbox"
+                                    defaultChecked={todo.isCompleted}
+                                    onChange={(e) =>setEditingTodoisCompleted(e.target.checked)}
+                                />
                             </label>
                             <input data-testid="modify-input"
                                 value={editingTodoValue}
@@ -170,11 +173,14 @@ function Todolist () {
                     ):(
                         <>
                         <label>
-                            <input type="checkbox" />
+                            <input type="checkbox" 
+                                defaultChecked={todo.isCompleted}
+                                onChange={(e) =>setEditingTodoisCompleted(e.target.checked)}
+                            />
                             <span>{todo.todo}</span>
                         </label>
                         <button data-testid="modify-button"
-                            onClick={() =>handleModifyTodo(todo.id, todo.todo, todo.isCompleted)}>수정</button>
+                            onClick={() =>handleModifyTodo(todo.id, todo.todo)}>수정</button>
                         <button data-testid="delete-button" 
                             onClick={() => handleDelteTodo(todo.id)}>삭제</button>
                         </>
