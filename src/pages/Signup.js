@@ -37,7 +37,6 @@ function Signup () {
                 },
                 body: JSON.stringify({ email, password}),
             })
-            .then((response) => response.json())
             .then((data) =>{
                 if (data.statusCode !==400){
                     setErrorMessage('');
