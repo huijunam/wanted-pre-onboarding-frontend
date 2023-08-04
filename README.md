@@ -2,7 +2,7 @@
 프로젝트의 실행 방법: npm install & npm start 하시면 실행됩니다. \
 데모 영상 :
 
-https://github.com/huijunam/wanted-pre-onboarding-frontend/assets/15117257/e0aa6c93-cb77-422b-9c69-73b4590f0f23
+![ezgif com-video-to-gif](https://github.com/huijunam/wanted-pre-onboarding-frontend/assets/15117257/15f6f10e-9bdd-47f7-899b-357070e44ece)
 
 ## ⚠️ commit 규칙
 
