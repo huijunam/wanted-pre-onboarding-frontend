@@ -1,7 +1,8 @@
 지원자의 성명: 남희주 \
 프로젝트의 실행 방법: npm install & npm start 하시면 실행됩니다. \
-데모 영상 \
-데모 영상은 배포 링크로 대체 가능하며, 배포가 되었고 배포된 사이트에서 기능이 모두 동작하면 가산점이 부여됩니다.
+데모 영상 :
+
+https://github.com/huijunam/wanted-pre-onboarding-frontend/assets/15117257/e0aa6c93-cb77-422b-9c69-73b4590f0f23
 
 ## ⚠️ commit 규칙
 
